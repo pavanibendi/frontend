@@ -1,0 +1,65 @@
+<div class="container py-3">
+    <div class="row">
+        <div class="col">
+            Tasks
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTaskPopup" (click)="popupMode = 'add'">Add Task</button>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @for(i of tasks; track i.id) {
+                        <tr>
+                            <th scope="row">{{ i.id }}</th>
+                            <td>{{ i.name }}</td>
+                            <td>{{ i.status }}</td>
+                            <td>
+                                <button class="btn btn-outline-secondary" (click)="populateValues(i)" data-bs-target="#addTaskPopup" data-bs-toggle="modal">Edit</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal fade" id="addTaskPopup" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content p-3">
+                <form>
+                    <div>
+                        <label for="taskName" class="form-label">Task Name</label>
+                        <input type="text" class="form-control" id="taskName" [(ngModel)]="taskName" name="taskName" />
+                    </div>
+                    <div class="my-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" [(ngModel)]="taskStatus" name="taskStatus">
+                            <option value="To Do">To Do</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-secondary me-2" (click)="clearValues()" data-bs-dismiss="modal">Close</button>
+                        @if(popupMode === 'add') {
+                            <button type="submit" class="btn btn-primary" (click)="addTask()" data-bs-dismiss="modal">Add</button>
+                        }
+                        @else {
+                            <button type="submit" class="btn btn-primary" (click)="editTask()" data-bs-dismiss="modal">Edit</button>
+                        }
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
